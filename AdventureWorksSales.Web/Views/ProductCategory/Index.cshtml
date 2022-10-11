@@ -1,0 +1,58 @@
+﻿@model AdventureWorksSales.Web.Models.ProductCategoryViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (Model.ProductCategories != null && Model.ProductCategories.Count() > 0)
+{
+    <div class="jumbotron">
+        <h1>PRODUCT CATEGORIES</h1>
+    </div>
+    <div class="col-sm-12">
+        <p>
+            @Html.ActionLink("Add Product Category", "Create", "", new { @class = "btn btn-primary" })
+        </p>
+        <br />
+    </div>
+    if (TempData["message"] != null)
+    {
+        <div class="col-sm-8">
+            <div class="alert alert-success">@TempData["message"]</div>
+        </div>
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cat in Model.ProductCategories)
+            {
+                <tr>
+                    <td>
+                        @cat.Name
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = cat.ProductCategoryID }, new { @class = "btn btn-primary" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="pager pull-right">
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index",
+            new { page = x }))
+    </div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Sorry! No records exist.
+    </div>
+}
+
+
+
